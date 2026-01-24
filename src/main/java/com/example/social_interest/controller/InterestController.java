@@ -1,8 +1,26 @@
 package com.example.social_interest.controller;
 
-
-import org.springframework.web.bind.annotation.RestController;
+import com.example.social_interest.dto.InterestRequest;
+import com.example.social_interest.service.InterestService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/interests")
+@RequiredArgsConstructor
 public class InterestController {
+
+    private final InterestService interestService;
+
+    @PostMapping("/update")
+    public ResponseEntity<Void> updateInterest(
+            @RequestBody InterestRequest request,
+            @AuthenticationPrincipal String userId
+    ) {
+        interestService.updateInterest(userId, request);
+        return ResponseEntity.noContent().build();
+    }
 }
+
