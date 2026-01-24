@@ -23,7 +23,6 @@ public class InterestServiceImpl implements InterestService {
     @Override
     public void updateInterest(String userId, InterestRequest request) {
 
-        // 1️⃣ Fetch reel to get semantic tags
         Reel reel = reelRepository.findById(request.getReelId())
                 .orElseThrow(() -> new RuntimeException("Reel not found"));
 
