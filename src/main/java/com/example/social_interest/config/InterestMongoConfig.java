@@ -18,7 +18,7 @@ public class InterestMongoConfig {
 
     @Bean
     @Primary
-    public MongoDatabaseFactory postsMongoDbFactory(
+    public MongoDatabaseFactory interestMongoDbFactory(
             @Value("${spring.data.mongodb.interests.uri}") String uri) {
         return new SimpleMongoClientDatabaseFactory(uri);
     }

@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class ReelMongoConfig {
 
     @Bean
-    public MongoDatabaseFactory postsMongoDbFactory(
+    public MongoDatabaseFactory reelMongoDbFactory(
             @Value("${spring.data.mongodb.reels.uri}") String uri) {
         return new SimpleMongoClientDatabaseFactory(uri);
     }
