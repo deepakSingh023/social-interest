@@ -1,4 +1,4 @@
-package com.example.social_interest.repository;
+package com.example.social_interest.repository.reel;
 
 import com.example.social_interest.entity.Reel;
 import org.springframework.data.mongodb.repository.MongoRepository;

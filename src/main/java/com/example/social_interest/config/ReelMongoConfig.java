@@ -1,5 +1,6 @@
 package com.example.social_interest.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +12,13 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(
-        basePackages = "com.example.social_interest.repository.ReelRepository",
+        basePackages = "com.example.social_interest.repository.reel",
         mongoTemplateRef = "reelMongoTemplate"
 )
+
 public class ReelMongoConfig {
 
-    @Bean
+    @Bean(name = "reelMongoDbFactory")
     public MongoDatabaseFactory reelMongoDbFactory(
             @Value("${spring.data.mongodb.reels.uri}") String uri) {
         return new SimpleMongoClientDatabaseFactory(uri);
@@ -24,7 +26,8 @@ public class ReelMongoConfig {
 
     @Bean(name = "reelMongoTemplate")
     public MongoTemplate reelMongoTemplate(
-            MongoDatabaseFactory reelMongoDbFactory) {
-        return new MongoTemplate(reelMongoDbFactory);
+            @Qualifier("reelMongoDbFactory") MongoDatabaseFactory factory) {
+        return new MongoTemplate(factory);
     }
 }
+

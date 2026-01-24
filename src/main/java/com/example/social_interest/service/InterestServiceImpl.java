@@ -4,8 +4,8 @@ import com.example.social_interest.dto.InterestRequest;
 import com.example.social_interest.entity.InterestScore;
 import com.example.social_interest.entity.Reel;
 import com.example.social_interest.entity.UserInterest;
-import com.example.social_interest.repository.InterestRepository;
-import com.example.social_interest.repository.ReelRepository;
+import com.example.social_interest.repository.interest.InterestRepository;
+import com.example.social_interest.repository.reel.ReelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

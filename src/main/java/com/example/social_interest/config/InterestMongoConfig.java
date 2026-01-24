@@ -1,5 +1,6 @@
 package com.example.social_interest.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +12,13 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(
-        basePackages = "com.example.social_interest.repository.InterestRepository",
+        basePackages = "com.example.social_interest.repository.interest",
         mongoTemplateRef = "interestMongoTemplate"
 )
+
 public class InterestMongoConfig {
 
-    @Bean
+    @Bean(name = "interestMongoDbFactory")
     @Primary
     public MongoDatabaseFactory interestMongoDbFactory(
             @Value("${spring.data.mongodb.interests.uri}") String uri) {
@@ -26,7 +28,7 @@ public class InterestMongoConfig {
     @Bean(name = "interestMongoTemplate")
     @Primary
     public MongoTemplate interestMongoTemplate(
-            MongoDatabaseFactory interestMongoDbFactory) {
-        return new MongoTemplate(interestMongoDbFactory);
+            @Qualifier("interestMongoDbFactory") MongoDatabaseFactory factory) {
+        return new MongoTemplate(factory);
     }
 }
