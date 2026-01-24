@@ -24,7 +24,7 @@ public class ReelMongoConfig {
 
     @Bean(name = "reelMongoTemplate")
     public MongoTemplate reelMongoTemplate(
-            MongoDatabaseFactory postsMongoDbFactory) {
-        return new MongoTemplate(postsMongoDbFactory);
+            MongoDatabaseFactory reelMongoDbFactory) {
+        return new MongoTemplate(reelMongoDbFactory);
     }
 }

@@ -26,7 +26,7 @@ public class InterestMongoConfig {
     @Bean(name = "interestMongoTemplate")
     @Primary
     public MongoTemplate interestMongoTemplate(
-            MongoDatabaseFactory postsMongoDbFactory) {
-        return new MongoTemplate(postsMongoDbFactory);
+            MongoDatabaseFactory interestMongoDbFactory) {
+        return new MongoTemplate(interestMongoDbFactory);
     }
 }
