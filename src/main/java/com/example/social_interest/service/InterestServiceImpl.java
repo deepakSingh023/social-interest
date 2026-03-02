@@ -31,7 +31,7 @@ public class InterestServiceImpl implements InterestService {
             return; // nothing to learn
         }
 
-        // 2️⃣ Fetch or create UserInterest
+
         UserInterest userInterest = interestRepository
                 .findByUserId(userId)
                 .orElseGet(() -> {
@@ -43,13 +43,13 @@ public class InterestServiceImpl implements InterestService {
 
         Instant now = Instant.now();
 
-        // 3️⃣ Update each semantic tag
+
         for (String tag : semanticTags) {
 
             InterestScore score = userInterest.getInterests()
                     .getOrDefault(tag, new InterestScore(0.1, now));
 
-            // 3a️⃣ Apply decay
+
             long hoursPassed = Duration
                     .between(score.getLastUpdated(), now)
                     .toHours();
@@ -57,10 +57,10 @@ public class InterestServiceImpl implements InterestService {
             double decayFactor = Math.exp(-0.03 * hoursPassed);
             double decayedScore = score.getScore() * decayFactor;
 
-            // 3b️⃣ Apply boost
+
             double boostedScore = decayedScore + boostForEvent(request.getEvent());
 
-            // 3c️⃣ Clamp score
+
             boostedScore = Math.max(0.0, Math.min(1.0, boostedScore));
 
             score.setScore(boostedScore);
@@ -69,7 +69,7 @@ public class InterestServiceImpl implements InterestService {
             userInterest.getInterests().put(tag, score);
         }
 
-        // 4️⃣ Save
+
         userInterest.setLastUpdated(now);
         interestRepository.save(userInterest);
     }
