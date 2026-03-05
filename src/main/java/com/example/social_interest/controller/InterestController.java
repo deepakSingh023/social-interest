@@ -16,10 +16,10 @@ public class InterestController {
 
     @PostMapping("/update")
     public ResponseEntity<Void> updateInterest(
-            @RequestBody InterestRequest request,
-            @AuthenticationPrincipal String userId
+            @RequestBody InterestRequest request
+
     ) {
-        interestService.updateInterest(userId, request);
+        interestService.updateInterest(request.getUserId(), request);
         return ResponseEntity.noContent().build();
     }
 }
