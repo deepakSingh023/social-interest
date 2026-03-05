@@ -17,7 +17,7 @@ public class LogAspect {
 
     private final static Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-    @Around("exception(* com.example.social_interest.controller..*(..))")
+    @Around("execution(* com.example.social_interest.controller..*(..))")
     public Object getLogger(ProceedingJoinPoint jp)throws Throwable{
 
         long start = System.currentTimeMillis();
@@ -41,7 +41,7 @@ public class LogAspect {
 
             log.error("controller={}  api={} status=SUCCESS  latencyMs = {}",controller,method,latency);
 
-            return ex;
+            throw ex;
         }
     }
 }

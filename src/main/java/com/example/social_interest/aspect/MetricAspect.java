@@ -20,7 +20,7 @@ public class MetricAspect {
     private final MeterRegistry meterRegistry;
 
 
-    @Around("exception(* com.example.social_interest.controller..*(..))")
+    @Around("execution(* com.example.social_interest.controller..*(..))")
     public Object getMetrics(ProceedingJoinPoint jp)throws Throwable{
 
         String method = jp.getSignature().getName();
@@ -56,7 +56,7 @@ public class MetricAspect {
                     "controller",controller,
                     "status","error").increment();
 
-            return ex;
+            throw ex;
 
         }
     }
