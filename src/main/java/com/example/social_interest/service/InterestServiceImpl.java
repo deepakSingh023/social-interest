@@ -2,10 +2,8 @@ package com.example.social_interest.service;
 
 import com.example.social_interest.dto.InterestRequest;
 import com.example.social_interest.entity.InterestScore;
-import com.example.social_interest.entity.Reel;
 import com.example.social_interest.entity.UserInterest;
-import com.example.social_interest.repository.interest.InterestRepository;
-import com.example.social_interest.repository.reel.ReelRepository;
+import com.example.social_interest.repository.InterestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,18 +15,15 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class InterestServiceImpl implements InterestService {
 
-    private final ReelRepository reelRepository;
     private final InterestRepository interestRepository;
 
     @Override
     public void updateInterest(String userId, InterestRequest request) {
 
-        Reel reel = reelRepository.findById(request.getReelId())
-                .orElseThrow(() -> new RuntimeException("Reel not found"));
 
-        Set<String> semanticTags = reel.getSemanticTags();
+        Set<String> semanticTags = request.getTags();
         if (semanticTags == null || semanticTags.isEmpty()) {
-            return; // nothing to learn
+            return;
         }
 
 
@@ -74,7 +69,7 @@ public class InterestServiceImpl implements InterestService {
         interestRepository.save(userInterest);
     }
 
-    // 🎯 Event → boost mapping
+
     private double boostForEvent(String event) {
         return switch (event) {
             case "WATCH_50" -> 0.06;
