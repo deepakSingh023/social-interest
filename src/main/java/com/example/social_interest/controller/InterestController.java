@@ -1,5 +1,6 @@
 package com.example.social_interest.controller;
 
+import com.example.social_interest.dto.InterestDto;
 import com.example.social_interest.dto.InterestRequest;
 import com.example.social_interest.service.InterestService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,17 @@ public class InterestController {
     ) {
         interestService.updateInterest(request.getUserId(), request);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/getInterest")
+    public ResponseEntity<InterestDto> getInterest(
+            @RequestBody String userId
+    ){
+
+       InterestDto data =  interestService.getInterest(userId);
+
+       return ResponseEntity.ok(data);
+
     }
 }
 

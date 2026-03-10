@@ -1,11 +1,15 @@
 package com.example.social_interest.service;
 
+import com.example.social_interest.dto.InterestDto;
 import com.example.social_interest.dto.InterestRequest;
 import com.example.social_interest.entity.InterestScore;
 import com.example.social_interest.entity.UserInterest;
 import com.example.social_interest.repository.InterestRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -67,6 +71,16 @@ public class InterestServiceImpl implements InterestService {
 
         userInterest.setLastUpdated(now);
         interestRepository.save(userInterest);
+    }
+
+    @Override
+    public InterestDto getInterest(String userId){
+
+        UserInterest interest = interestRepository.findByUserId(userId).
+                orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"interest not found"));
+
+        return new InterestDto(interest.getId(), interest.getUserId(),interest.getInterests(),interest.getLastUpdated());
+
     }
 
 
