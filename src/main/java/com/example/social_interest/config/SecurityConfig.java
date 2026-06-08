@@ -23,7 +23,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public InternalFilter internalFilter(@Value("secret.service")String secret){
+    public InternalFilter internalFilter(@Value("${secret.service}")String secret){
         return new InternalFilter(secret);
     }
 

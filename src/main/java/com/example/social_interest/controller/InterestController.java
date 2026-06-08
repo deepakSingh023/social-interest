@@ -24,7 +24,7 @@ public class InterestController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/getInterest")
+    @PostMapping("/getInterest")
     public ResponseEntity<InterestDto> getInterest(
             @RequestBody String userId
     ){

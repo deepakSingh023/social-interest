@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Set;
 
 @Service
@@ -76,13 +77,22 @@ public class InterestServiceImpl implements InterestService {
     @Override
     public InterestDto getInterest(String userId){
 
-        UserInterest interest = interestRepository.findByUserId(userId).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"interest not found"));
+        UserInterest interest = interestRepository.findByUserId(userId)
+                .orElseGet(() -> {
+                    UserInterest ui = new UserInterest();
+                    ui.setUserId(userId);
+                    ui.setInterests(new HashMap<>());
+                    ui.setLastUpdated(Instant.now());
+                    return ui;
+                });
 
-        return new InterestDto(interest.getId(), interest.getUserId(),interest.getInterests(),interest.getLastUpdated());
-
+        return new InterestDto(
+                interest.getId(),
+                interest.getUserId(),
+                interest.getInterests(),
+                interest.getLastUpdated()
+        );
     }
-
 
     private double boostForEvent(String event) {
         return switch (event) {
